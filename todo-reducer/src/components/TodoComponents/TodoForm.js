@@ -1,43 +1,37 @@
 import React, { useState, useContext } from "react";
 import { TodoContext } from "../../contexts/todoContext";
-///after converting to class - work on adding an ADD dispatch to onSubmit
-export default function TodoForm() {
-  //   constructor() {
-  //     super();
-  //     this.state = {
-  //       todoItem: ""
-  //     };
-  //   }
 
-  const { state, setState } = useContext(TodoContext);
-  console.log(state);
+export default function TodoForm(props) {
+  const { state } = useContext(TodoContext);
+  //   console.log(`TodoForm.js: state: `, state);
+  //   console.log(`TodoForm.js: props: `, props);
   const [newItem, setNewItem] = useState("");
   const handleChanges = e => {
     setNewItem(e.target.value);
+    // console.log(`TodoForm.js: handleChanges: newItem `, newItem);
   };
 
   const handleSubmit = e => {
+    e.preventDefault();
     if (newItem !== "") {
       console.log(newItem);
-      dispatchEvent({ type: "ADD", payload: newItem });
+      props.addTask(newItem);
     }
+    setNewItem("");
+    // console.log(`TodoForm.js: handleSubmit: localState: newItem: `, newItem);
   };
 
   return (
     <section className="form-container">
       <label forhtml="to do list" hidden />
-      <form
-        id="to do list"
-        onSubmit={newItem => dispatchEvent({ type: "ADD", payload: newItem })}
-        className="form"
-      >
+      <form id="to do list" onSubmit={handleSubmit} className="form">
         <input
           className="input"
           placeholder="What else?"
           onChange={handleChanges}
           type="text"
           name="item"
-          value={state.todoItem}
+          value={newItem}
         />
         <button className="add-button">Do More</button>
       </form>

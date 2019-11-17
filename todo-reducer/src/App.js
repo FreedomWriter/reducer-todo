@@ -1,55 +1,45 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import "../src/components/TodoComponents/Todo.css";
 import TodoList from "./components/TodoComponents/TodoList";
 import TodoForm from "./components/TodoComponents/TodoForm";
 import { TodoContext } from "./contexts/todoContext";
-// import TodoSearch from "./components/TodoComponents/TodoSearch";
 
 function App() {
-  const { state, setState } = useContext(TodoContext);
-  const addTask = todoItem => {
-    // setState({
-    //   todo: [
-    //     ...state.todo,
-    //     {
-    //       item: todoItem,
-    //       id: Date.now(),
-    //       completed: false,
-    //       isProcrastinating: false
-    //     }
-    //   ]
-    // });
+  const { state, dispatch } = useContext(TodoContext);
+  // console.log(`App.js: state: `, state);
+
+  const addTask = newItem => {
+    console.log(`App.js: addTask: newItem: `, newItem);
+    dispatch({ type: "ADD", payload: newItem });
+
+    // localStorage.setItem("tasks", JSON.stringify([...state.todo]));
   };
 
   const toggleComplete = taskID => {
-    setState({
-      todo: state.todo.map(task => {
-        if (task.id === taskID)
-          return {
-            ...task,
-            complete: !task.complete
-          };
-        return task;
-      })
-    });
+    console.log(
+      `App.js: toggleComplete: You reached toggleComplete, here is the taskID (also payload): `,
+      taskID
+    );
+    dispatch({ type: "TOGGLE_COMPLETED", payload: taskID });
   };
 
-  const clearComplete = () => {
-    console.log(`you clicked clear`);
-    setState({
-      todo: state.todo.filter(task => {
-        return !task.complete;
-      })
-    });
+  const clearComplete = item => {
+    console.log(`App.js: clerComplete: item`, item);
+    // setState({
+    //   todo: state.todo.filter(task => {
+    //     return !task.complete;
+    //   })
+    // });
+    dispatch({ type: "REMOVE_COMPLETED", payload: item });
   };
 
   // console.log(`${state.todo.task}`);
   return (
     <div className="app">
       <h2>Are You Done?</h2>
-      <TodoForm />
+      <TodoForm addTask={addTask} />
       <TodoList
-        todo={state.todo}
+        // todo={state.todo}
         clearComplete={clearComplete}
         toggleComplete={toggleComplete}
       />
