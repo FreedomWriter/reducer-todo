@@ -1,8 +1,6 @@
-import React, { useState, useContext } from "react";
-import { TodoContext } from "../../contexts/todoContext";
+import React, { useState } from "react";
 
 export default function TodoForm(props) {
-  const { state } = useContext(TodoContext);
   //   console.log(`TodoForm.js: state: `, state);
   //   console.log(`TodoForm.js: props: `, props);
   const [newItem, setNewItem] = useState("");

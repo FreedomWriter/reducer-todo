@@ -8,12 +8,12 @@ export const todoReducer = (state, action) => {
       return {
         ...state,
         todo: [
+          ...state.todo,
           {
             item: action.payload,
             completed: false,
             id: Date.now()
-          },
-          ...state.todo
+          }
         ]
       };
     case "REMOVE_COMPLETED":
