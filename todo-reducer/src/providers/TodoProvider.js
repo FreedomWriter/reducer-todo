@@ -4,7 +4,6 @@ import { TodoContext } from "../contexts/todoContext";
 export const todoReducer = (state, action) => {
   switch (action.type) {
     case "ADD":
-      //   localStorage.setItem("tasks", JSON.stringify(state.todo));
       console.log(`todoReducer: switch: case ADD: state `, state);
       return {
         ...state,

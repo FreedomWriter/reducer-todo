@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "../src/components/TodoComponents/Todo.css";
 import TodoList from "./components/TodoComponents/TodoList";
 import TodoForm from "./components/TodoComponents/TodoForm";
@@ -8,6 +8,9 @@ function App() {
   const { state, dispatch } = useContext(TodoContext);
   // console.log(`App.js: state: `, state);
 
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(state.todo));
+  }, [state]);
   const addTask = newItem => {
     console.log(`App.js: addTask: newItem: `, newItem);
     dispatch({ type: "ADD", payload: newItem });
