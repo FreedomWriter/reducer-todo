@@ -1,26 +1,21 @@
-export const initialState = {
-  todos: [
-    {
-      item: "Learn about reducers",
-      completed: false,
-      id: 3892987589
-    }
-  ],
-  currentView: "all"
-};
+import { useContext } from "react";
+
+const { state, setState } = useContext(TodoContext);
+
+export const initialState = state;
 
 export const titleReducer = (state, action) => {
   switch (action.type) {
     case "ADD":
       console.log(`added`);
       return {
-        ...state,
-        todos: [
-          ...state.todos,
+        todo: [
+          ...state.todo,
           {
             item: action.payload,
+            id: Date.now(),
             completed: false,
-            id: (state.id += Date.now())
+            isProcrastinating: false
           }
         ]
       };

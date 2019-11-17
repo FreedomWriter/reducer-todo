@@ -8,17 +8,17 @@ import { TodoContext } from "./contexts/todoContext";
 function App() {
   const { state, setState } = useContext(TodoContext);
   const addTask = todoItem => {
-    setState({
-      todo: [
-        ...state.todo,
-        {
-          task: todoItem,
-          id: Date.now(),
-          complete: false,
-          isProcrastinating: false
-        }
-      ]
-    });
+    // setState({
+    //   todo: [
+    //     ...state.todo,
+    //     {
+    //       item: todoItem,
+    //       id: Date.now(),
+    //       completed: false,
+    //       isProcrastinating: false
+    //     }
+    //   ]
+    // });
   };
 
   const toggleComplete = taskID => {
@@ -47,7 +47,7 @@ function App() {
   return (
     <div className="app">
       <h2>Are You Done?</h2>
-      <TodoForm addTask={addTask} />
+      <TodoForm />
       <TodoList
         todo={state.todo}
         clearComplete={clearComplete}

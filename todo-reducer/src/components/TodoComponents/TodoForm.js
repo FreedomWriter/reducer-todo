@@ -1,46 +1,46 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { TodoContext } from "../../contexts/todoContext";
+///after converting to class - work on adding an ADD dispatch to onSubmit
+export default function TodoForm() {
+  //   constructor() {
+  //     super();
+  //     this.state = {
+  //       todoItem: ""
+  //     };
+  //   }
 
-class TodoForm extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      todoItem: ""
-    };
-  }
-
-  handleChanges = e => {
-    this.setState({
-      todoItem: e.target.value
-    });
+  const { state, setState } = useContext(TodoContext);
+  console.log(state);
+  const [newItem, setNewItem] = useState("");
+  const handleChanges = e => {
+    setNewItem(e.target.value);
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-    if (this.state.todoItem !== "") {
-      this.props.addTask(this.state.todoItem);
-      this.setState({
-        todoItem: ""
-      });
+  const handleSubmit = e => {
+    if (newItem !== "") {
+      console.log(newItem);
+      dispatchEvent({ type: "ADD", payload: newItem });
     }
   };
-  render() {
-    return (
-      <section className="form-container">
-        <label forhtml="to do list" hidden />
-        <form id="to do list" onSubmit={this.handleSubmit} className="form">
-          <input
-            className="input"
-            placeholder="What else?"
-            onChange={this.handleChanges}
-            type="text"
-            name="item"
-            value={this.state.todoItem}
-          />
-          <button className="add-button">Do More</button>
-        </form>
-      </section>
-    );
-  }
-}
 
-export default TodoForm;
+  return (
+    <section className="form-container">
+      <label forhtml="to do list" hidden />
+      <form
+        id="to do list"
+        onSubmit={newItem => dispatchEvent({ type: "ADD", payload: newItem })}
+        className="form"
+      >
+        <input
+          className="input"
+          placeholder="What else?"
+          onChange={handleChanges}
+          type="text"
+          name="item"
+          value={state.todoItem}
+        />
+        <button className="add-button">Do More</button>
+      </form>
+    </section>
+  );
+}
